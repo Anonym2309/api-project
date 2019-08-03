@@ -23,7 +23,7 @@ module.exports = {
     },
     // Register user
     signup: async(req, res) => {
-        const { firstName, lastName, email, password } = req.params.body;
+        const { firstName, lastName, email, password } = req.value.body;
 
         //Check if there is same email used
         const foundUser = await User.findOne({ email });
@@ -32,7 +32,7 @@ module.exports = {
         }
 
         //Create new user
-        const newUser = new Users({ email, password });
+        const newUser = new User({ email, password });
         await newUser.save();
 
         //Get Token for new user
