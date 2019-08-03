@@ -39,15 +39,16 @@ module.exports = {
 
     //Login user
     signIn: async(req, res, next) => {
-        //Get Token for new user
-        const user = await User.findById({ _id });
+        //Login
+        const { userId } = req.params;
+        const user = await User.findById(_id)
         if (user) {
             return res.status(200).json({
                 message: "Login Successfully"
-            })
+            });
         }
+        //Get Token
         const token = signToken(user);
-
         //Respond with token
         res.status(200).json({ token });
     },
