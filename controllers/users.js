@@ -23,7 +23,7 @@ module.exports = {
     },
     // Register user
     signup: async(req, res) => {
-        const { email, password } = req.value.body;
+        const { firstName, lastName, email, password } = req.params.body;
 
         //Check if there is same email used
         const foundUser = await User.findOne({ email });
@@ -32,27 +32,20 @@ module.exports = {
         }
 
         //Create new user
-        const newUser = new User({ email, password });
+        const newUser = new Users({ email, password });
         await newUser.save();
-        res.status(201).json(newUser);
-    },
 
-    //Login user
-    signIn: async(req, res, next) => {
-        //Login
-        const { userId } = req.params;
-        const user = await User.findById(_id)
-        if (user) {
-            return res.status(200).json({
-                message: "Login Successfully"
-            });
-        }
-        //Get Token
-        const token = signToken(user);
+        //Get Token for new user
+        const token = signToken(newUser);
+
         //Respond with token
         res.status(200).json({ token });
     },
 
+    //Login user
+    signIn: async(req, res, next) => {
+
+    },
     secret: async(req, res, next) => {
         console.log('Lagi Ngetes Passport');
         res.json({ secret: "resource" });
