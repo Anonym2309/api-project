@@ -37,8 +37,8 @@ passport.use(new LocalStrategy({
             return done(null, false);
         }
         //Check Password
-        const userPassword = await User.password({ password });
-        if (!password) {
+        const userPassword = await User.password({ userPassword });
+        if (!userpassword) {
             return done(null, false);
         }
     }));
