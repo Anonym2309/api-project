@@ -32,20 +32,26 @@ module.exports = {
         }
 
         //Create new user
-        const newUser = new Users({ email, password });
+        const newUser = new User({ email, password });
         await newUser.save();
+        res.status(201).json(newUser);
+    },
 
+    //Login user
+    signIn: async(req, res, next) => {
         //Get Token for new user
-        const token = signToken(newUser);
+        const user = await User.findById({ _id });
+        if (user) {
+            return res.status(200).json({
+                message: "Login Successfully"
+            })
+        }
+        const token = signToken(user);
 
         //Respond with token
         res.status(200).json({ token });
     },
 
-    //Login user
-    signIn: async(req, res, next) => {
-
-    },
     secret: async(req, res, next) => {
         console.log('Lagi Ngetes Passport');
         res.json({ secret: "resource" });
